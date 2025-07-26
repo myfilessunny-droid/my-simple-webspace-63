@@ -1,24 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ExternalLink, Camera } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 const ShowcaseSection = () => {
-  const stories = [
-    {
-      title: "From Ruins to Reverence: Kurnool Temple Revival",
-      snippet: "How a forgotten 400-year-old temple became the heart of community life again...",
-      readTime: "5 min read"
-    },
-    {
-      title: "Weaving Dreams: Women Artisans of Anantapur",
-      snippet: "Traditional handloom skills create modern livelihoods for 200+ women...",
-      readTime: "3 min read"
-    },
-    {
-      title: "Goshala Chronicles: Caring for Sacred Cows",
-      snippet: "Sustainable cow care practices that benefit both animals and farmers...",
-      readTime: "4 min read"
-    }
-  ];
+  const [stories, setStories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('stories')
+          .select('title, excerpt, read_time_minutes')
+          .eq('status', 'published')
+          .limit(3)
+          .order('published_at', { ascending: false });
+
+        if (error) {
+          console.error('Error fetching stories:', error);
+        } else {
+          setStories(data || []);
+        }
+      } catch (err) {
+        console.error('Unexpected error:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStories();
+  }, []);
 
   const images = [
     {
@@ -57,27 +68,37 @@ const ShowcaseSection = () => {
           </h3>
           
           <div className="space-y-6">
-            {stories.map((story, index) => (
-              <article
-                key={index}
-                className="bg-white border-l-4 border-sandalwood p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow"
-              >
-                <h4 className="text-lg font-medium text-primary mb-2 leading-snug">
-                  {story.title}
-                </h4>
-                <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
-                  {story.snippet}
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">
-                    {story.readTime}
-                  </span>
-                  <button className="story-link text-sm text-accent hover:text-accent/80 transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md px-2 py-1">
-                    Read More
-                  </button>
-                </div>
-              </article>
-            ))}
+            {loading ? (
+              <div className="text-center py-8">
+                <p className="text-muted-foreground">Loading stories...</p>
+              </div>
+            ) : stories.length > 0 ? (
+              stories.map((story, index) => (
+                <article
+                  key={index}
+                  className="bg-white border-l-4 border-sandalwood p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow"
+                >
+                  <h4 className="text-lg font-medium text-primary mb-2 leading-snug">
+                    {story.title}
+                  </h4>
+                  <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
+                    {story.excerpt || "Read this inspiring story..."}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">
+                      {story.read_time_minutes} min read
+                    </span>
+                    <button className="story-link text-sm text-accent hover:text-accent/80 transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md px-2 py-1">
+                      Read More
+                    </button>
+                  </div>
+                </article>
+              ))
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-muted-foreground">No stories available yet.</p>
+              </div>
+            )}
           </div>
         </div>
 

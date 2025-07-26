@@ -77,7 +77,7 @@ const AreaOfWorkSection = () => {
                   "{area.quote}"
                 </blockquote>
               </div>
-              <button className="mt-6 inline-block text-sm font-semibold text-accent hover:underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md px-2 py-1">
+              <button className="mt-6 inline-block text-sm font-semibold text-accent hover:underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md px-2 py-1 invisible">
                 Learn More →
               </button>
             </div>

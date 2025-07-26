@@ -10,8 +10,9 @@ export const useWebsiteHero = () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('website_hero')
+        .from('website_content')
         .select('*')
+        .eq('section_name', 'hero')
         .single();
 
       if (error && error.code !== 'PGRST116') {

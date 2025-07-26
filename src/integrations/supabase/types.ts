@@ -350,30 +350,132 @@ export type Database = {
         }
         Relationships: []
       }
-      website_content: {
+      website_contact: {
         Row: {
-          content: Json
-          created_at: string
+          address: string | null
+          created_at: string | null
+          email: string | null
           id: string
-          last_updated_by: string | null
-          section_name: string
-          updated_at: string
+          office_hours: string | null
+          phone: string | null
+          section_name: string | null
+          updated_at: string | null
         }
         Insert: {
-          content: Json
-          created_at?: string
+          address?: string | null
+          created_at?: string | null
+          email?: string | null
           id?: string
-          last_updated_by?: string | null
-          section_name: string
-          updated_at?: string
+          office_hours?: string | null
+          phone?: string | null
+          section_name?: string | null
+          updated_at?: string | null
         }
         Update: {
-          content?: Json
-          created_at?: string
+          address?: string | null
+          created_at?: string | null
+          email?: string | null
           id?: string
-          last_updated_by?: string | null
-          section_name?: string
-          updated_at?: string
+          office_hours?: string | null
+          phone?: string | null
+          section_name?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      website_hero: {
+        Row: {
+          created_at: string | null
+          cta_primary: string | null
+          cta_secondary: string | null
+          id: string
+          section_name: string | null
+          subtitle: string | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          cta_primary?: string | null
+          cta_secondary?: string | null
+          id?: string
+          section_name?: string | null
+          subtitle?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          cta_primary?: string | null
+          cta_secondary?: string | null
+          id?: string
+          section_name?: string | null
+          subtitle?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      website_mission: {
+        Row: {
+          created_at: string | null
+          id: string
+          mission_text: string | null
+          philosophy: string | null
+          section_name: string | null
+          updated_at: string | null
+          vision: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          mission_text?: string | null
+          philosophy?: string | null
+          section_name?: string | null
+          updated_at?: string | null
+          vision?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          mission_text?: string | null
+          philosophy?: string | null
+          section_name?: string | null
+          updated_at?: string | null
+          vision?: string | null
+        }
+        Relationships: []
+      }
+      website_stats: {
+        Row: {
+          created_at: string | null
+          id: string
+          programs_active: number | null
+          section_name: string | null
+          temples_revived: number | null
+          updated_at: string | null
+          villages: number | null
+          women_skilled: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          programs_active?: number | null
+          section_name?: string | null
+          temples_revived?: number | null
+          updated_at?: string | null
+          villages?: number | null
+          women_skilled?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          programs_active?: number | null
+          section_name?: string | null
+          temples_revived?: number | null
+          updated_at?: string | null
+          villages?: number | null
+          women_skilled?: number | null
         }
         Relationships: []
       }

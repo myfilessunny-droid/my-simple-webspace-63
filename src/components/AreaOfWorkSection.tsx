@@ -77,7 +77,10 @@ const AreaOfWorkSection = () => {
                   "{area.quote}"
                 </blockquote>
               </div>
-              <button className="mt-6 inline-block text-sm font-semibold text-accent hover:underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md px-2 py-1 invisible">
+              <button 
+                className="mt-6 inline-block text-sm font-semibold text-accent hover:underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md px-2 py-1 story-link"
+                onClick={() => window.open(`#${area.id}`, '_self')}
+              >
                 Learn More →
               </button>
             </div>
@@ -90,8 +93,13 @@ const AreaOfWorkSection = () => {
         <p className="text-lg text-muted-foreground mb-6">
           Each initiative is rooted in community needs and cultural preservation
         </p>
-        <button className="btn-secondary">
-          Explore All Programs
+        <button 
+          className="btn-secondary group"
+          onClick={() => document.getElementById('stories')?.scrollIntoView({ behavior: 'smooth' })}
+        >
+          <span className="group-hover:scale-105 transition-transform duration-300">
+            Explore All Programs
+          </span>
         </button>
       </div>
     </section>

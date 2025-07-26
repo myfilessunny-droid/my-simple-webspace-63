@@ -31,43 +31,51 @@ const HeroSection: React.FC<HeroSectionProps> = ({ content, stats }) => {
       
       {/* Main Content */}
       <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6">
+        <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in-up">
           {content?.title || 'Reviving the Soul of'}{' '}
-          <span className="text-orange-400">Bharat</span>
+          <span className="text-turmeric">Bharat</span>
         </h1>
         
-        <p className="text-xl md:text-2xl mb-8 text-gray-200">
+        <p className="text-xl md:text-2xl mb-8 text-white/90 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
           {content?.subtitle || "Restoring India's spiritual heritage, empowering villages through culture and self-sufficiency. True transformation begins within our roots."}
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
-            {content?.cta_primary || 'Join the Movement'}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <button 
+            className="btn-primary hover:shadow-glow group"
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            <span className="group-hover:scale-105 transition-transform duration-300">
+              {content?.cta_primary || 'Join the Movement'}
+            </span>
           </button>
-          <button className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2">
-            <Play size={20} />
+          <button 
+            className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 group hover:scale-105"
+            onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            <Play size={20} className="group-hover:scale-110 transition-transform" />
             {content?.cta_secondary || 'Explore Our Work'}
           </button>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-orange-400">{stats?.villages ?? '100+'}</div>
-            <div className="text-sm text-gray-300">Villages Reached</div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+          <div className="text-center group cursor-pointer hover-lift">
+            <div className="text-3xl md:text-4xl font-bold text-turmeric mb-2 group-hover:scale-110 transition-transform duration-300">{stats?.villages ?? '100+'}</div>
+            <div className="text-sm text-white/80">Villages Reached</div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-orange-400">{stats?.women_skilled ?? '2000+'}</div>
-            <div className="text-sm text-gray-300">Women Skilled</div>
+          <div className="text-center group cursor-pointer hover-lift">
+            <div className="text-3xl md:text-4xl font-bold text-turmeric mb-2 group-hover:scale-110 transition-transform duration-300">{stats?.women_skilled ?? '2000+'}</div>
+            <div className="text-sm text-white/80">Women Skilled</div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-orange-400">{stats?.temples_revived ?? '20+'}</div>
-            <div className="text-sm text-gray-300">Temples Revived</div>
+          <div className="text-center group cursor-pointer hover-lift">
+            <div className="text-3xl md:text-4xl font-bold text-turmeric mb-2 group-hover:scale-110 transition-transform duration-300">{stats?.temples_revived ?? '20+'}</div>
+            <div className="text-sm text-white/80">Temples Revived</div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-orange-400">{stats?.programs_active ?? '15+'}</div>
-            <div className="text-sm text-gray-300">Programs Active</div>
+          <div className="text-center group cursor-pointer hover-lift">
+            <div className="text-3xl md:text-4xl font-bold text-turmeric mb-2 group-hover:scale-110 transition-transform duration-300">{stats?.programs_active ?? '15+'}</div>
+            <div className="text-sm text-white/80">Programs Active</div>
           </div>
         </div>
       </div>

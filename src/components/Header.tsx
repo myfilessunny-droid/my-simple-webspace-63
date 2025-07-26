@@ -45,13 +45,17 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           {navItems.map((item) => (
-            <a
+            <button
               key={item.label}
-              href={item.href}
-              className="text-sm md:text-base font-light tracking-wide text-foreground hover:text-accent px-3 py-2 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
+              onClick={() => {
+                const target = document.querySelector(item.href);
+                target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+              className="text-sm md:text-base font-light tracking-wide text-foreground hover:text-accent px-3 py-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md hover:scale-105 relative group"
             >
               {item.label}
-            </a>
+              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+            </button>
           ))}
           {/* Admin Login link for desktop */}
           <a
@@ -86,14 +90,17 @@ const Header = () => {
         <div className="md:hidden bg-ivory border-t border-border shadow-lg">
           <nav className="container mx-auto px-4 py-6 space-y-4">
             {navItems.map((item) => (
-              <a
+              <button
                 key={item.label}
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-3 text-lg font-medium text-foreground hover:text-accent border-b border-border/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
+                onClick={() => {
+                  const target = document.querySelector(item.href);
+                  target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  setIsMobileMenuOpen(false);
+                }}
+                className="block w-full text-left py-3 text-lg font-medium text-foreground hover:text-accent border-b border-border/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
               >
                 {item.label}
-              </a>
+              </button>
             ))}
             {/* Admin Login link for mobile */}
             <a

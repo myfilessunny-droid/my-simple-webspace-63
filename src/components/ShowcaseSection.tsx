@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { ExternalLink, Camera } from 'lucide-react';
+import { ExternalLink, Camera, BookOpen } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import LoadingSpinner from '@/components/ui/loading-spinner';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 const ShowcaseSection = () => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { elementRef, isIntersecting } = useIntersectionObserver({
+    threshold: 0.2,
+    triggerOnce: true
+  });
 
   useEffect(() => {
     const fetchStories = async () => {
@@ -33,29 +39,39 @@ const ShowcaseSection = () => {
 
   const images = [
     {
-      src: "/api/placeholder/400/300",
-      alt: "Temple restoration before and after",
-      caption: "Kurnool Temple Revival"
+      icon: "🛕",
+      gradient: "from-indigo/20 to-sandalwood/30",
+      caption: "Kurnool Temple Revival",
+      description: "Restoring ancient architecture with traditional techniques"
     },
     {
-      src: "/api/placeholder/400/300", 
-      alt: "Women weaving traditional textiles",
-      caption: "Artisan Training Program"
+      icon: "🪡", 
+      gradient: "from-clay-red/20 to-turmeric/30",
+      caption: "Artisan Training Program",
+      description: "Empowering women through traditional textile skills"
     },
     {
-      src: "/api/placeholder/400/300",
-      alt: "Children learning in temple courtyard",
-      caption: "Cultural Education"
+      icon: "📚",
+      gradient: "from-sandalwood/20 to-ivory/40",
+      caption: "Cultural Education",
+      description: "Teaching children Sanskrit and traditional arts"
     },
     {
-      src: "/api/placeholder/400/300",
-      alt: "Artisans painting traditional motifs",
-      caption: "Heritage Art Revival"
+      icon: "🎨",
+      gradient: "from-turmeric/20 to-clay-red/30",
+      caption: "Heritage Art Revival",
+      description: "Preserving ancient painting techniques"
     }
   ];
 
   return (
-    <section id="stories" className="py-24 px-6 lg:px-20 max-w-7xl mx-auto">
+    <section 
+      ref={elementRef} 
+      id="stories" 
+      className={`py-24 px-6 lg:px-20 max-w-7xl mx-auto transition-all duration-1000 ${
+        isIntersecting ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+    >
       <h2 className="text-center text-4xl font-semibold text-primary mb-16">
         Stories from the Ground
       </h2>
@@ -70,7 +86,8 @@ const ShowcaseSection = () => {
           <div className="space-y-6">
             {loading ? (
               <div className="text-center py-8">
-                <p className="text-muted-foreground">Loading stories...</p>
+                <LoadingSpinner size="lg" className="mb-4" />
+                <p className="text-muted-foreground">Loading inspiring stories...</p>
               </div>
             ) : stories.length > 0 ? (
               stories.map((story, index) => (
@@ -88,7 +105,8 @@ const ShowcaseSection = () => {
                     <span className="text-xs text-muted-foreground">
                       {story.read_time_minutes} min read
                     </span>
-                    <button className="story-link text-sm text-accent hover:text-accent/80 transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md px-2 py-1">
+                    <button className="story-link text-sm text-accent hover:text-accent/80 transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md px-2 py-1 group flex items-center gap-1">
+                      <BookOpen className="w-3 h-3 group-hover:scale-110 transition-transform" />
                       Read More
                     </button>
                   </div>
@@ -108,27 +126,36 @@ const ShowcaseSection = () => {
             {images.map((image, index) => (
               <div
                 key={index}
-                className="group relative rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
+                className="group relative rounded-xl overflow-hidden shadow-soft hover:shadow-warm transition-all duration-500 cursor-pointer hover-lift"
               >
-                <div className="aspect-square bg-gradient-to-br from-sandalwood/20 to-accent/10 flex items-center justify-center">
-                  <Camera className="w-8 h-8 text-accent/40" />
+                <div className={`aspect-square bg-gradient-to-br ${image.gradient} flex flex-col items-center justify-center p-6 border border-sandalwood/20`}>
+                  <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
+                    {image.icon}
+                  </div>
+                  <h4 className="text-sm font-medium text-primary text-center mb-2">
+                    {image.caption}
+                  </h4>
+                  <p className="text-xs text-muted-foreground text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    {image.description}
+                  </p>
                 </div>
                 
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <div className="text-center text-white">
-                    <ExternalLink className="w-6 h-6 mx-auto mb-2" />
-                    <p className="text-sm font-medium">{image.caption}</p>
-                  </div>
-                </div>
+                {/* Interactive Border Effect */}
+                <div className="absolute inset-0 border-2 border-turmeric opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-xl scale-105 group-hover:scale-100"></div>
               </div>
             ))}
           </div>
 
           {/* CTA Button */}
           <div className="mt-8 text-center">
-            <button className="btn-primary">
-              See Our Stories
+            <button 
+              className="btn-primary group"
+              onClick={() => window.open('#stories', '_self')}
+            >
+              <span className="group-hover:scale-105 transition-transform duration-300">
+                See Our Stories
+              </span>
+              <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
             </button>
           </div>
         </div>
